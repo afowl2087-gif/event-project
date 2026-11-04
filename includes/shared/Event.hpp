@@ -11,7 +11,7 @@ private:
     
 
 public:
-    Event(std::string title, double price, int duration);
+    Event(const std::string& title, double price, int duration);
     virtual ~Event() = default;
     virtual void describe() const = 0;
     std::string getTitle() const;
