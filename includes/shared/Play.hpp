@@ -10,6 +10,7 @@ class Play : public Event {
 
     public:
      Play(const std::string& title, double price, int duration, const std::string& intervalInfo);
+     std::string getIntervalInfo() const;
      void describe() const override;
 };
 

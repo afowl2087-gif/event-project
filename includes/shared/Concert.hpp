@@ -3,16 +3,19 @@
 #include <string>
 #include "Event.hpp"
 
-class Concert : public Event {
-    private:
-     std::string style;
-     std::string lineUp;
-     std::string soundCheck;
-     
+class Concert : public Event
+{
+private:
+    std::string style;
+    std::string lineUp;
+    std::string soundCheck;
 
-    public:
-     Concert(const std::string& title, double price, int duration, const std::string& style, const std::string& lineUp, const std::string& soundCheck);
-     void describe() const override;
+public:
+    Concert(const std::string &title, double price, int duration, const std::string &style, const std::string &lineUp, const std::string &soundCheck);
+    std::string getStyle() const;
+    std::string getLineUp() const;
+    std::string getSoundCheck() const;
+    void describe() const override;
 };
 
 #endif
