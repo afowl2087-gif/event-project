@@ -12,14 +12,13 @@ add_library(event_lib
     src/shared/Play.cpp
     src/shared/Screening.cpp
     src/shared/Room.cpp
-    src/shared/Admin.cpp
-    src/shared/Booking.cpp
 )
 target_include_directories(event_lib PUBLIC includes)
 
-add_executable(planner src/main.cpp)
-target_link_libraries(planner PRIVATE event_lib)
-
+if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
+    add_executable(planner src/main.cpp)
+    target_link_libraries(planner PRIVATE event_lib)
+endif()
 
 enable_testing()
 
