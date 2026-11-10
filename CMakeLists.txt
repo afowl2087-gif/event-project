@@ -12,6 +12,7 @@ add_library(event_lib
     src/shared/Play.cpp
     src/shared/Screening.cpp
     src/shared/Room.cpp
+    src/shared/Schedule.cpp
 )
 target_include_directories(event_lib PUBLIC includes)
 
@@ -29,6 +30,7 @@ add_executable(tests
     tests/test_concert.cpp
     tests/test_play.cpp
     tests/test_screening.cpp
+    tests/test_schedule.cpp
 )
 
 target_link_libraries(tests
