@@ -2,29 +2,38 @@
 #include <iostream>
 #include <utility>
 
-Schedule::Schedule(std::unique_ptr<Event> event, const Room& room, int year, int month, int day, int startHour, int startMinute, int seatsForSale) : event(std::move(event)), room(room), year(year),
-      month(month),
-      day(day),
-      startHour(startHour),
-      startMinute(startMinute),
-      seatsForSale(seatsForSale),
-      seatsSold(0) {}
+Schedule::Schedule(std::unique_ptr<Event> event, const Room &room, int year, int month, int day, int startHour, int startMinute, int seatsForSale) : event(std::move(event)), room(room), year(year),
+                                                                                                                                                     month(month),
+                                                                                                                                                     day(day),
+                                                                                                                                                     startHour(startHour),
+                                                                                                                                                     startMinute(startMinute),
+                                                                                                                                                     seatsForSale(seatsForSale) {}
 
-bool Schedule::book(int seats)
+bool Schedule::book(const std::string& clientName, int seats)
 {
-    if (seats <= 0 || seatsSold + seats > seatsForSale) {
+
+    if (clientName.empty() || seats <= 0 || seats > seatsForSale - getSeatsSold())
+    {
         return false;
     }
-    seatsSold += seats;
+
+    int bookingId = bookings.size() + 1;
+
+    Booking newBooking(bookingId, clientName, seats);
+
+    bookings.push_back(newBooking);
+
     return true;
 }
 
-bool Schedule::collidesWith(const Schedule& other) const
+bool Schedule::collidesWith(const Schedule &other) const
 {
-    if (room.getName() != other.room.getName()) {
+    if (room.getName() != other.room.getName())
+    {
         return false;
     }
-    if (year != other.year || month != other.month || day != other.day) {
+    if (year != other.year || month != other.month || day != other.day)
+    {
         return false;
     }
 
@@ -33,7 +42,8 @@ bool Schedule::collidesWith(const Schedule& other) const
     int otherStart = other.startHour * 60 + other.startMinute;
     int otherEnd = otherStart + other.event->getDuration();
 
-    if (end <= otherStart || otherEnd <= start) {
+    if (end <= otherStart || otherEnd <= start)
+    {
         return false;
     }
     return true;
@@ -41,23 +51,118 @@ bool Schedule::collidesWith(const Schedule& other) const
 
 bool Schedule::isSoldOut() const
 {
-    return seatsSold >= seatsForSale;
+    if (getSeatsSold() >= seatsForSale)
+    {
+        return true;
+    }
+
+    else
+    {
+        return false;
+    }
+}
+
+bool Schedule::isBefore(const Schedule &other) const
+{
+    if (year != other.year)
+    {
+        if (year < other.year)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    if (month != other.month)
+    {
+        if (month < other.month)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    if (day != other.day)
+    {
+        if (day < other.day)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    if (startHour != other.startHour)
+    {
+        if (startHour < other.startHour)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    if (startMinute < other.startMinute)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+std::string Schedule::getTitle() const { return event->getTitle(); }
+
+std::string Schedule::getRoomName() const { return room.getName(); }
+
+int Schedule::getSeatsSold() const { 
+
+    int total = 0;
+
+    for (std::size_t i = 0; i < bookings.size(); i++)
+    {
+        total += bookings[i].getSeats();
+    }
+
+    return total;
+}
+
+double Schedule::getPrice() const { return event->getPrice(); }
+
+int Schedule::getDuration() const { return event->getDuration(); }
+
+double Schedule::getRevenue() const
+{
+    return getSeatsSold() * event->getPrice();
 }
 
 void Schedule::describe() const
 {
     std::cout << day << "/" << month << "/" << year << "  " << startHour << ":";
-    
-    if (startMinute < 10) {
+
+    if (startMinute < 10)
+    {
         std::cout << "0";
     }
     std::cout << startMinute << "  " << room.getName() << "\n";
 
     event->describe();
 
-    std::cout << "  " << seatsSold << " / " << seatsForSale << " seats";
-    
-    if (isSoldOut()) {
+    std::cout << "  " << getSeatsSold() << " / " << seatsForSale << " seats";
+
+    if (isSoldOut())
+    {
         std::cout << " - sold out";
     }
     std::cout << "\n";

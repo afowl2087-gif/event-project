@@ -13,7 +13,8 @@ TEST(Schedule, BooksSeats)
     Room room("Studio", 100);
     Schedule schedule(std::move(concert), room, 2026, 11, 10, 18, 0, 100);
 
-    EXPECT_TRUE(schedule.book(20));
+    EXPECT_TRUE(schedule.book("Marie", 20));
+    EXPECT_EQ(schedule.getSeatsSold(), 20);
 }
 
 TEST(Schedule, RejectsInvalidBooking)
@@ -22,8 +23,8 @@ TEST(Schedule, RejectsInvalidBooking)
     Room room("Studio", 100);
     Schedule schedule(std::move(concert), room, 2026, 11, 10, 18, 0, 100);
 
-    EXPECT_FALSE(schedule.book(0));
-    EXPECT_FALSE(schedule.book(-5));
+    EXPECT_FALSE(schedule.book("Marie", 0));
+    EXPECT_FALSE(schedule.book("Marie", -5));
 }
 
 TEST(Schedule, RejectsFullBooking)
@@ -32,8 +33,8 @@ TEST(Schedule, RejectsFullBooking)
     Room room("Studio", 100);
     Schedule schedule(std::move(concert), room, 2026, 11, 10, 18, 0, 100);
 
-    EXPECT_TRUE(schedule.book(80));
-    EXPECT_FALSE(schedule.book(30));
+    EXPECT_TRUE(schedule.book("Marie", 80));
+    EXPECT_FALSE(schedule.book("Marie", 30));
 }
 
 
@@ -52,8 +53,9 @@ TEST(Schedule, SoldOut)
     Room room("Studio", 100);
     Schedule schedule(std::move(concert), room, 2026, 11, 10, 18, 0, 100);
 
-    EXPECT_TRUE(schedule.book(100));
+    EXPECT_TRUE(schedule.book("Marie", 100));
     EXPECT_TRUE(schedule.isSoldOut());
+    EXPECT_EQ(schedule.getSeatsSold(), 100);
 }
 
 
