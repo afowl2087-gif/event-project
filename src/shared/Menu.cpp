@@ -5,17 +5,17 @@
 int Menu::readChoice() const {
     std::string line;
     if (!std::getline(std::cin, line))
-        return 0;                    // fin de l'entrée : on revient en arrière
+        return 0;                    
     try {
         return std::stoi(line);
     } catch (...) {
-        return -1;                   // pas un nombre
+        return -1;                   
     }
 }
 
-void Menu::adminMenu() {
+    #if 0
     std::cout << "Le menu de l admin sera appelé ici\n";
-}
+    #endif
 
 void Menu::run() {
     bool running = true;
@@ -30,13 +30,13 @@ void Menu::run() {
 
         switch (readChoice()) {
 
-            // ---------- 1 : BROWSE ----------
+            
             case 1: {
                 bool browsing = true;
                 while (browsing) {
-                    std::cout << "\nBrowse the programme\n";
+                    std::cout << "\nBrowse the program\n";
                     std::cout << "  1  Show all events\n";
-                    std::cout << "  2  Show one event in detail\n";
+                    std::cout << "  2  Find by title \n";
                     std::cout << "  0  Cancel\n";
                     std::cout << "\nYour choice: ";
 
@@ -48,6 +48,9 @@ void Menu::run() {
                             std::cout << "Event number (0 to cancel): ";
                             int n = readChoice();
                             if (n == 0) break;
+                            #if 0
+                            std::cin<< 
+                            #endif
                             std::cout << "la fonction qui affiche les details de l evenement sera appele ici\n";
                             break;
                         }
@@ -109,7 +112,7 @@ void Menu::run() {
 
             
             case 3:
-            AdminMenu();
+            std::cout<<" appele la fonction de l'admin";
                 break;
 
             

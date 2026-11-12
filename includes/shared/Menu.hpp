@@ -8,4 +8,3 @@ private:
     void display() const;
     int readChoice() const;
 };
-};

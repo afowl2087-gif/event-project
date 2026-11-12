@@ -4,7 +4,7 @@
 class Booking {
 private:
     int id;
-    std::string clientName;
+    const std::string& clientName;
     int seats;
 
 public:
