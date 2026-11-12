@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/afowl/Documents/projet c/.git/event project/build/tests_e3b0c442_Debug_tests.cmake")
+  include("C:/Users/afowl/Documents/projet c/.git/event project/build/tests_e3b0c442_Debug_tests.cmake")
+else()
+  add_test(tests_NOT_BUILT tests_NOT_BUILT)
+endif()

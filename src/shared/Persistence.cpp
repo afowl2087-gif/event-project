@@ -1,4 +1,4 @@
-#include "persistence.hpp"
+#include "Persistence.hpp"
 
 void Save::writeString(std::ofstream& out, const std::string& s) {
     size_t n = s.size();
