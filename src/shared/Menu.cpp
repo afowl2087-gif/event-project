@@ -30,7 +30,7 @@ void Menu::saveState(int screen) const {
     std::rename("save.tmp", "save.txt");
 }
 
-// SAVE
+
 int Menu::loadState() const {
     std::ifstream f("save.txt");
     int screen = 0;
