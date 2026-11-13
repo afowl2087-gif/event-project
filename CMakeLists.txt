@@ -13,6 +13,8 @@ add_library(event_lib
     src/shared/Screening.cpp
     src/shared/Room.cpp
     src/shared/Schedule.cpp
+    src/shared/Program.cpp
+    src/shared/Booking.cpp
 )
 target_include_directories(event_lib PUBLIC includes)
 
@@ -31,6 +33,7 @@ add_executable(tests
     tests/test_play.cpp
     tests/test_screening.cpp
     tests/test_schedule.cpp
+    tests/test_program.cpp
 )
 
 target_link_libraries(tests
