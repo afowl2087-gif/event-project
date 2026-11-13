@@ -17,13 +17,9 @@ private:
 
 public:
     void addRoom(const Room& room);
-
     const Room* findRoom(const std::string& name) const;
-
     bool addSchedule(std::unique_ptr<Schedule> schedule);
-
     bool book(int index, const std::string& clientName, int seats);
-
     int seatsSoldInRoom(const std::string& roomName) const;
     int getScheduleCount() const;
     bool displayByTitle(const std::string& title) const;
@@ -31,7 +27,8 @@ public:
     double totalRevenue() const;
     void displayRooms() const;
     void displayBusiestRooms() const;
-
+    bool displayBookings(int index) const;
+    std::vector<std::string> getTitles() const;
     std::vector<double> getPrices() const;
     std::vector<int> getAttendances() const;
     std::vector<int> getDurations() const;

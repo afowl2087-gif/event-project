@@ -1,4 +1,5 @@
 #include "shared/Schedule.hpp"
+#include "shared/Colors.hpp"
 #include <iostream>
 #include <utility>
 
@@ -122,6 +123,20 @@ bool Schedule::isBefore(const Schedule &other) const
     }
 }
 
+void Schedule::displayBookings() const
+{
+    if (bookings.empty())
+    {
+        std::cout << Colors::CYAN << "  No booking yet.\n" << Colors::RESET;
+        return;
+    }
+
+    for (std::size_t i = 0; i < bookings.size(); i++)
+    {
+        bookings[i].display();
+    }
+}
+
 std::string Schedule::getTitle() const { return event->getTitle(); }
 
 std::string Schedule::getRoomName() const { return room.getName(); }
@@ -149,21 +164,21 @@ double Schedule::getRevenue() const
 
 void Schedule::describe() const
 {
-    std::cout << day << "/" << month << "/" << year << "  " << startHour << ":";
+    std::cout << Colors::DATE << day << "/" << month << "/" << year << "  " << startHour << ":";
 
     if (startMinute < 10)
     {
         std::cout << "0";
     }
-    std::cout << startMinute << "  " << room.getName() << "\n";
+    std::cout << startMinute << "  " << Colors::RESET << Colors::ROOM << room.getName() << "\n" << Colors::RESET;
 
     event->describe();
 
-    std::cout << "  " << getSeatsSold() << " / " << seatsForSale << " seats";
+    std::cout << Colors::GREEN << "  " << getSeatsSold() << " / " << seatsForSale << " seats\n" << Colors::RESET;
 
     if (isSoldOut())
     {
-        std::cout << " - sold out";
+        std::cout << Colors::RED << " - sold out\n" << Colors::RESET;
     }
     std::cout << "\n";
 }

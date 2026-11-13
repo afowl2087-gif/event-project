@@ -1,4 +1,5 @@
 #include "shared/Program.hpp"
+#include "shared/Colors.hpp"
 #include <iostream>
 #include <utility>
 
@@ -87,6 +88,7 @@ void Program::displayAll() const
     for (std::size_t i = 0; i < schedules.size(); i++) {
         std::cout << (i + 1) << ". ";
         schedules[i]->describe();
+        std::cout << "\n----------------------------------------\n";
     }
 }
 
@@ -117,7 +119,7 @@ void Program::displayRooms() const
         return;
     }
     for (std::size_t i = 0; i < rooms.size(); i++) {
-        std::cout << "  " << rooms[i].getName() << " (" << rooms[i].getCapacity() << " seats)\n";
+        std::cout << Colors::ROOM << "  " << rooms[i].getName() << Colors::RESET << " (" << rooms[i].getCapacity() << " seats)\n";
     }
 }
 
@@ -137,9 +139,31 @@ void Program::displayBusiestRooms() const
     }
     for (std::size_t i = 0; i < rooms.size(); i++) {
         if (seatsSoldInRoom(rooms[i].getName()) == maxSeats) {
-            std::cout << rooms[i].getName() << " : " << maxSeats << " seats sold\n";
+            std::cout << rooms[i].getName() << " : " << Colors::RED << maxSeats << " seats sold\n" << Colors::RESET;
         }
     }
+}
+
+bool Program::displayBookings(int index) const
+{
+    if (index < 0 || index >= getScheduleCount())
+    {
+        return false;
+    }
+
+    schedules[index]->describe();
+    schedules[index]->displayBookings();
+    return true;
+}
+
+std::vector<std::string> Program::getTitles() const
+{
+    std::vector<std::string> titles;
+    for (std::size_t i = 0; i < schedules.size(); i++)
+    {
+        titles.push_back(schedules[i]->getTitle());
+    }
+    return titles;
 }
 
 std::vector<double> Program::getPrices() const

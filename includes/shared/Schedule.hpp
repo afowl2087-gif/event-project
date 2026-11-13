@@ -26,6 +26,7 @@ public:
     bool collidesWith(const Schedule& other) const;
     bool isSoldOut() const;
     bool isBefore(const Schedule& other) const;
+    void displayBookings() const;
     std::string getRoomName() const;
     std::string getTitle() const;
     int getSeatsSold() const;
