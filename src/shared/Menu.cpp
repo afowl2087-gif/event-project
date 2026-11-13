@@ -1,6 +1,8 @@
 #include "Menu.hpp"
 #include <iostream>
 #include <string>
+#include <fstream>   
+#include <cstdio>    
 
 int Menu::readChoice() const {
     std::string line;
@@ -13,25 +15,58 @@ int Menu::readChoice() const {
     }
 }
 
+
+void Menu::saveState(int screen) const {
+    if (screen == 0) {
+        std::remove("save.txt");
+        return;
+    }
+    {
+        std::ofstream f("save.tmp", std::ios::trunc);
+        if (!f) return;
+        f << screen << "\n";
+    }
+    std::remove("save.txt");
+    std::rename("save.tmp", "save.txt");
+}
+
+// SAVE
+int Menu::loadState() const {
+    std::ifstream f("save.txt");
+    int screen = 0;
+    if (!f || !(f >> screen)) return 0;
+    if (screen != 1 && screen != 2) return 0;
+    return screen;
+}
+
     #if 0
     std::cout << "Le menu de l admin sera appelé ici\n";
     #endif
 
 void Menu::run() {
     bool running = true;
+    int resume = loadState();   // SAVE
 
     while (running) {
-        std::cout << "\nWelcome to The Venue.\n";
-        std::cout << "  1  Browse the programme\n";
-        std::cout << "  2  Book seats\n";
-        std::cout << "  3  Administration\n";
-        std::cout << "  4  Quit\n";
-        std::cout << "\nYour choice: ";
+        int choice;                                
+        if (resume != 0) {                          
+            choice = resume;                         
+            resume = 0;                              
+        } else {                                     
+            std::cout << "\nWelcome to The Venue.\n";
+            std::cout << "  1  Browse the programme\n";
+            std::cout << "  2  Book seats\n";
+            std::cout << "  3  Administration\n";
+            std::cout << "  4  Quit\n";
+            std::cout << "\nYour choice: ";
+            choice = readChoice();                   
+        }                                            
 
-        switch (readChoice()) {
+        switch (choice) {                            
 
             
             case 1: {
+                saveState(1);                        
                 bool browsing = true;
                 while (browsing) {
                     std::cout << "\nBrowse the program\n";
@@ -62,11 +97,13 @@ void Menu::run() {
                             break;
                     }
                 }
+                saveState(0);                        
                 break;
             }
 
             
             case 2: {
+                saveState(2);                        
                 bool booking = true;
                 while (booking) {
                     std::cout << "\nBook seats\n";
@@ -90,7 +127,7 @@ void Menu::run() {
                             std::string name;
                             std::getline(std::cin, name);
 
-                            std::cout << "Les fonctions de verification et de reservation seront appeées  ici \n";
+                            std::cout << "Les fonctions de verification et de reservation seront appelées  ici \n";
                             break;
                         }
                         case 2:
@@ -107,6 +144,7 @@ void Menu::run() {
                             break;
                     }
                 }
+                saveState(0);                        
                 break;
             }
 
