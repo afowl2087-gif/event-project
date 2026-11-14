@@ -1,6 +1,6 @@
 #include "shared/Menu.hpp"
 #include "shared/Colors.hpp"
-#include "shared/Statistics.hpp"
+#include "shared/statistics.hpp"
 #include "shared/Concert.hpp"
 #include "shared/Play.hpp"
 #include "shared/Screening.hpp"
