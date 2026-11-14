@@ -1,25 +1,18 @@
-
 #pragma once
 #include <string>
-#include <vector>
+#include <memory>
 #include <fstream>
+#include "Program.hpp"
 
-struct Customer {
-    std::string name;
-    std::string event;
-    std::string seats;
-    int id;
-};
-
-class Save {
+class Persistence {
 private:
     void writeString(std::ofstream& out, const std::string& s);
     std::string readString(std::ifstream& in);
+    void writeInt(std::ofstream& out, int v);
+    int readInt(std::ifstream& in);
+    void writeEvent(std::ofstream& out, const Event& e);
+    std::unique_ptr<Event> readEvent(std::ifstream& in);
 public:
-    void savefile(const std::string& filename);
-    void loadfile(const std::string& filename);
-
-    std::vector<Customer> customers;
-
-
+    void savefile(const std::string& filename, const Program& program);
+    void loadfile(const std::string& filename, Program& program);
 };
