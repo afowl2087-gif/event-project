@@ -4,21 +4,29 @@ project(event-project CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_compile_options(-Wall -Wextra -Wpedantic)
+if(MSVC)
+    add_compile_options(/W4)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
 add_library(event_lib
-    src/shared/Event.cpp
-    src/shared/Concert.cpp
+    src/shared/Admin.cpp
+    src/shared/Booking.cpp
+    src/shared/Persistence.cpp
+    src/logger/Logger.cpp
+    src/shared/Concert.cpp 
+    src/shared/Program.cpp
     src/shared/Play.cpp
     src/shared/Screening.cpp
+    src/shared/Menu.cpp
+    src/shared/Event.cpp
+    src/Main.cpp
     src/shared/Room.cpp
     src/shared/Schedule.cpp
-    src/shared/Program.cpp
-    src/shared/Booking.cpp
-    src/shared/Admin.cpp
-    src/shared/Menu.cpp
+    
 )
-target_include_directories(event_lib PUBLIC includes)
+target_include_directories(event_lib PUBLIC includes includes/shared includes/logger)
 
 if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
     add_executable(planner src/main.cpp)
@@ -37,6 +45,10 @@ if(GTest_FOUND)
     tests/test_screening.cpp
     tests/test_schedule.cpp
     tests/test_program.cpp
+    tests/test_Admin.cpp
+    tests/test_Booking.cpp
+    tests/test_Logger.cpp
+    
 )
 
 target_link_libraries(tests

@@ -9,8 +9,9 @@
 
 
 class Program {
-    friend class Persistance;
+    
 private:
+    friend class Persistence;
     std::vector<Room> rooms;
     std::vector<std::unique_ptr<Schedule>> schedules;
     std::string lowerCase(const std::string& text) const;
