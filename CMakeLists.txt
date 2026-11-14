@@ -21,7 +21,7 @@ add_library(event_lib
     src/shared/Screening.cpp
     src/shared/Menu.cpp
     src/shared/Event.cpp
-    src/Main.cpp
+    src/main.cpp
     src/shared/Room.cpp
     src/shared/Schedule.cpp
     
