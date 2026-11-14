@@ -1,4 +1,5 @@
-#pragma once 
+#ifndef STATISTICS_HPP
+#define STATISTICS_HPP
 #include <vector>
 #include <stdexcept>
 
@@ -14,7 +15,7 @@ public:
 
     T smallest() const {
         if (values.empty())
-            throw std::logic_error("any values");
+            throw std::logic_error("no value");
         T min = values[0];
         for (const T& v : values)
             if (v < min) 
@@ -24,7 +25,7 @@ public:
 
     T largest() const {
         if (values.empty())
-            throw std::logic_error("any values");
+            throw std::logic_error("no value");
         T max = values[0];
         for (const T& v : values)
             if (v > max)
@@ -34,7 +35,7 @@ public:
 
     double average() const {
         if (values.empty())
-            throw std::logic_error("any values");
+            throw std::logic_error("no value");
         double sum = 0;
         for (const T& v : values)
             sum += v;
@@ -42,3 +43,4 @@ public:
     }
 };
 
+#endif

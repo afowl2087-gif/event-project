@@ -15,6 +15,15 @@ add_library(event_lib
     src/shared/Booking.cpp
     src/shared/Persistence.cpp
     src/logger/Logger.cpp
+    src/shared/Concert.cpp 
+    src/shared/Program.cpp
+    src/shared/Play.cpp
+    src/shared/Screening.cpp
+    src/shared/Menu.cpp
+    src/shared/Event.cpp
+    src/Main.cpp
+    src/shared/Room.cpp
+    src/shared/Schedule.cpp
     
 )
 target_include_directories(event_lib PUBLIC includes includes/shared includes/logger)
@@ -32,7 +41,7 @@ add_executable(tests
     tests/test_Admin.cpp
     tests/test_Booking.cpp
     tests/test_Logger.cpp
-    tests/test_Persistence.cpp
+    
 )
 
 target_link_libraries(tests
