@@ -1,4 +1,4 @@
-#include "Admin.hpp"
+#include "shared/Admin.hpp"
 
 Admin::Admin(const std::string& login, const std::string& Password)
     : login(login), Password(Password), connected(false) {}

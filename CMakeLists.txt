@@ -33,11 +33,18 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
     target_link_libraries(planner PRIVATE event_lib)
 endif()
 
-enable_testing()
 
-find_package(GTest REQUIRED)
+find_package(GTest QUIET)
 
-add_executable(tests
+if(GTest_FOUND)
+    enable_testing()
+    add_executable(tests
+    tests/test_room.cpp
+    tests/test_concert.cpp
+    tests/test_play.cpp
+    tests/test_screening.cpp
+    tests/test_schedule.cpp
+    tests/test_program.cpp
     tests/test_Admin.cpp
     tests/test_Booking.cpp
     tests/test_Logger.cpp
@@ -52,3 +59,9 @@ target_link_libraries(tests
 
 include(GoogleTest)
 gtest_discover_tests(tests)
+
+else()
+    message(STATUS "GoogleTest not found: unit tests are not built")
+
+endif()
+
