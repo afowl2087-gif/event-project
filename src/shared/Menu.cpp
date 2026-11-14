@@ -4,6 +4,7 @@
 #include "shared/Concert.hpp"
 #include "shared/Play.hpp"
 #include "shared/Screening.hpp"
+#include "shared/Persistence.hpp"
 #include <memory>
 #include <utility>
 #include <iostream>
@@ -65,6 +66,9 @@ int Menu::readChoice() const
 void Menu::run()
 {
     bool running = true;
+
+    Persistence persistence;
+    persistence.loadfile("data.bin", program);
 
     while (running)
     {
@@ -169,6 +173,7 @@ void Menu::browseProgram() const
 
 void Menu::bookSeats()
 {
+    Persistence persistence;
     bool booking = true;
 
     while (booking)
@@ -232,6 +237,7 @@ void Menu::bookSeats()
         if (program.book(eventNumber - 1, clientName, seats))
         {
             std::cout << Colors::GREEN << "\nBooking successful!\n" << Colors::RESET;
+            persistence.savefile("data.bin", program);
         }
         else
         {
@@ -252,6 +258,7 @@ void Menu::bookSeats()
 
 void Menu::adminMenu()
 {
+    Persistence persistence;
     bool authenticated = false;
 
     while (!authenticated)
@@ -341,6 +348,7 @@ void Menu::adminMenu()
 
             Room room(name, capacity);
             program.addRoom(room);
+            persistence.savefile("data.bin", program);
 
             std::cout << Colors::GREEN << "Room added successfully.\n" << Colors::RESET;
             break;
@@ -492,7 +500,10 @@ void Menu::adminMenu()
                     seats);
 
             if (program.addSchedule(std::move(schedule)))
+            {
+                persistence.savefile("data.bin", program);
                 std::cout << Colors::GREEN << "Event added successfully.\n" << Colors::RESET;
+            }
             else
                 std::cout << Colors::RED << "Unable to add event. Schedule conflict.\n" << Colors::RESET;
 
@@ -736,4 +747,3 @@ void Menu::statistics() const
         }
     }
 }
-
