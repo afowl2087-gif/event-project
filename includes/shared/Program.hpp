@@ -9,6 +9,7 @@
 
 
 class Program {
+    friend class Persistance;
 private:
     std::vector<Room> rooms;
     std::vector<std::unique_ptr<Schedule>> schedules;

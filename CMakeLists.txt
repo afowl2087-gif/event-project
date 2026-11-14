@@ -15,6 +15,8 @@ add_library(event_lib
     src/shared/Schedule.cpp
     src/shared/Program.cpp
     src/shared/Booking.cpp
+    src/shared/Admin.cpp
+    src/shared/Menu.cpp
 )
 target_include_directories(event_lib PUBLIC includes)
 

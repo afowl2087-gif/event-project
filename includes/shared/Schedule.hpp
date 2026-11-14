@@ -9,6 +9,7 @@
 
 
 class Schedule {
+    friend class Persistance;
 private:
     std::unique_ptr<Event> event;
     std::vector<Booking> bookings;
