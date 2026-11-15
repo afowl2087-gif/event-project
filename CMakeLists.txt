@@ -30,6 +30,9 @@ target_include_directories(event_lib PUBLIC includes includes/shared includes/lo
 if(EXISTS ${CMAKE_SOURCE_DIR}/src/main.cpp)
     add_executable(planner src/main.cpp)
     target_link_libraries(planner PRIVATE event_lib)
+    if(MINGW)
+        target_link_options(planner PRIVATE -static)
+    endif()
 endif()
 
 
@@ -55,6 +58,11 @@ target_link_libraries(tests
     event_lib
     GTest::gtest_main
 )
+
+if(MINGW)
+        target_link_options(tests PRIVATE -static)
+endif()
+
 
 include(GoogleTest)
 gtest_discover_tests(tests)
